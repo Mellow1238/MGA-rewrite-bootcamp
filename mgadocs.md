@@ -13,7 +13,7 @@ simply edit these values as such
 ### ClassRestrict
 Accepts constant values for classes, as well as the value false to allow any class
 ### MgaAmmoResupply
-Modifying this should be advised against, this value is applied to all players with no discretion. If multiple plugins are running and change this value, then the last ran function will override this and potentially cause issues for other plugins. To solve this please see ==FIXME, guide for using pre+post funcs to control resupply==
+Modifying this should be advised against, this value is applied to all players with no discretion. If multiple plugins are running and change this value, then the last ran function will override this and potentially cause issues for other plugins. To solve this please see [Link Text](#updateweapons), guide for using pre+post funcs to control resupply==
 However, if you should still decide to use this simply modify it with
 ```js
 PluginsConf["MgaAmmoResupply"] <- false
