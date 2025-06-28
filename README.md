@@ -7,3 +7,7 @@ Trailer:
 [![Trailer](https://img.youtube.com/vi/W6yJGJll1Co/maxresdefault.jpg)](https://youtu.be/W6yJGJll1Co)
 
 Currently not released yet but check here soon :)
+
+
+Server hosting courtesy of generous donations from:
+Fedora31, Apple
