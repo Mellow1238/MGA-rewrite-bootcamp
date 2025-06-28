@@ -9,5 +9,5 @@ Trailer:
 Currently not released yet but check here soon :)
 
 
-Server hosting courtesy of generous donations from:
+## Server hosting courtesy of generous donations from:
 Fedora31, Apple
