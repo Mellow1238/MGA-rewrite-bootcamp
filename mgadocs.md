@@ -4,6 +4,40 @@ For plugin creators\
 Courtesy of Mellow\
 Please notify of issues or suggestions to this on the github page
 
+## Triggers to interact with the script
+### Portal doors
+Use a trigger_multiple and add the output
+OnStartTouch, targetting the logic_script entity (script_runner in prefabs), with the RunScriptCode input, and a parameter of
+```portaldoor(`arenaname`)``` for example ```portaldoor(`m`)``` for modern arena.
+
+### Rocket Explode Volumes
+These are quite complicated, use the included prefabs map to better your understanding. Images and better documentation for these will be written in future.
+
+### Rocket slow + drop down & Vertical Rebound
+Your map must include a filter for rockets and cow mangler projectiles, this can be found in the prefabs map and is named Is_Rocket.
+Use a trigger_multiple with the flag 'Everything (not including physics debris)' and add an output as such
+OnStartTouch, targetting the !activator entity (run script on the rocket), with the RunScriptCode input, and a parameter of
+RocketRebound(0) for slow + drop OR RocketRebound(1) for vertical rebound.
+
+### Fixed Spawn push triggers
+This version of mga uses vscript controlled emulated 'push' triggers to prevent the super catapults that occur randomly depending on your ping. To set these up you can start with a normal trigger_push, make sure to note down the desired angle and push force.
+Then convert this into a trigger_multiple (needed because push cannot fire the same outputs, and always exerts some force even if set to 0).
+Then set the 'Clients' flag, and set the 'Delay Before Reset' ('wait' in simple edit mode) to 0.015, this ensures a force is applied to the player every tick, mimicking how trigger_push functions. Now add an output as such
+OnTrigger, targetting the logic_script entity (script_runner in prefabs), with the RunScriptCode input, and a parameter of
+vpush2(speed, x,y,z) replacing speed with the velocity setting from your original push trigger, and setting x, y, and z to the angle components from your original trigger.
+
+### Auto EdgeBug triggers
+These exist to help ensure consistent auto edgebugs.
+To create one place a trigger over the bottom of the ramp, tweak this as you desire.
+Set this to trigger_multiple, with a 'Delay Before Reset' ('wait' in simple edit mode) to 0.1.
+Enable only the 'Clients' flag, and add an output as such
+OnStartTouch, targetting the logic_script entity (script_runner in prefabs), with the RunScriptCode input, and a parameter of
+autoeb(1).
+
+### Enabling crit with triggers
+Simple use any output (OnCatapulted, OnTrigger, OnStartTouch, anything) matching your desired use case. Target the logic_script entity (script_runner in prefabs), with the RunScriptCode input, and a parameter of
+jumppad(1).
+
 ## Plugin config options
 Modification guide\
 simply edit these values as such
