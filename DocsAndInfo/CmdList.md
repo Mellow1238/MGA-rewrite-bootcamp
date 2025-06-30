@@ -2,7 +2,7 @@
 > [!NOTE]
 > Replace m/ with either Prefix1 or Prefix2 defined in the server config
 
-##### m/help <arg> - sends help information in chat and lists a variety of parameters for help with specific things
+##### m/help `<arg>` - sends help information in chat and lists a variety of parameters for help with specific things
 
 
 ##### m/credits - displays mga-rewrite script and mga_bootcamp map credits
@@ -11,7 +11,7 @@
 ##### m/mga - places the player in a random arena
 
 
-##### m/arena <arena abbreviation> - places the player in the specified arena, find available arenas by entering m/arena
+##### m/arena `<arena abbreviation>` - places the player in the specified arena, find available arenas by entering m/arena
 ```
   Example: 'm/arena m'
 	Use m/arena with no parameter to list arenas
@@ -26,7 +26,7 @@
 ##### m/killinfo - toggles on/off a chat log of the velocity and bhop number of you and opponent when you get a kill or die
 
 
-##### m/speedo <type> - use axis or abs to select axis velocity or absolute velocity or none/no parameter to turn off
+##### m/speedo `<type>` - use axis or abs to select axis velocity or absolute velocity or none/no parameter to turn off
 ```
 	Supports custom display settings using any of the provided measures
 	provide another argument with the abbreviations of the measures you desire.
@@ -34,7 +34,7 @@
 	Example: 'm/speedo custom xyA'
 ```
  
-##### m/fov <num> - allows the user to change their fov between 75-130
+##### m/fov `<num>` - allows the user to change their fov between 75-130
 
 
 ##### m/tick - prints the current server tick, makes fetching sourcetv demo clips easier
@@ -48,10 +48,10 @@
 
 
 
-##### m/scoredisplay <type> - Switches between ui, text, or both for the method of duel score reporting. Use parameters ui, text, or both to choose
+##### m/scoredisplay `<type>` - Switches between ui, text, or both for the method of duel score reporting. Use parameters ui, text, or both to choose
 
 
-##### m/duel <duel arena> <duel type> - joins the player into a specified duel arena of specific duel type. Defaults to first to 10 if no duel type is supplied
+##### m/duel `<duel arena> <duel type>` - joins the player into a specified duel arena of specific duel type. Defaults to first to 10 if no duel type is supplied
 ```
 	Use m/duel with no parameter to list duel arenas
 ```
@@ -61,7 +61,7 @@
 This command can also be used again whilst waiting for someone to join your duel in order to change the duel type without rejoining the duel arena
 ```
 
-##### m/spec <duel arena> - allows the user to receive score updates on the chosen duel arena, useful for the tournament.
+##### m/spec `<duel arena>` - allows the user to receive score updates on the chosen duel arena, useful for the tournament.
 
 
 ##### m/spec auto - automatically determines which arena the spectator camera is in and shows that duels score. Also can clear the spectated duel and disable auto by using /spec with no parameter
@@ -107,7 +107,7 @@ This command can also be used again whilst waiting for someone to join your duel
 ##### m/clearpos - clears start position
 
 
-##### m/dummy <name> - spawns a dummy bot at players current position
+##### m/dummy `<name>` - spawns a dummy bot at players current position
 
 
 ##### m/regen - toggles the ammo and health regen disabled by default in practice mode
@@ -120,14 +120,14 @@ This command can also be used again whilst waiting for someone to join your duel
  
  
  
-##### m/config <setting> <value> <objtype> - changes server config temporarily
+##### m/config `<setting> <value> <objtype>` - changes server config temporarily
 ```
 	Example: m/config BhopTickWindow 5 int
 		Sets the bhoptickwindow to 5 ticks
 	Use m/config with no parameter to print config options in console
 ```
  
-##### m/admincrazy <userid>/<me> - enables a powerplay type admin mode for the user
+##### m/admincrazy `<userid>/<me>` - enables a powerplay type admin mode for the user
 ```
 	Example: m/admincrazy 4
 	Example: m/admincrazy me
