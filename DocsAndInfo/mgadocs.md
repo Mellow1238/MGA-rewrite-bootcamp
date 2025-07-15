@@ -628,6 +628,79 @@ vel.z = 289 - ( (800 * 0.015)/2 )
 player.SetAbsVelocity(vel)
 }
 ```
+### DuelWon
+This is ran whenever a duel ends. It does nothing normally, but is included to help plugins detect duel wins, and parse the info about the duel.
+This was used with an optional vscript addon to pass the duel information to a custom sourcemod on our official mga rewrite servers to log duel results into a discord channel.
+```js
+function getuserid(c)
+{
+	return NetProps.GetPropIntArray(playermanager, "m_iUserID", c.entindex());
+}
+
+function post_DuelWon()
+{
+		// Uses fish notice event because it includes many int values, 2 string values, and 1 bool value, perfect for all the needed duel info
+		// It also isn't called in normal mga since the holy mackerel is for scout
+		// even so a check has been put in place to ensure false detections
+		// by making stun_flags = -22 we set it to a value it can never normally be,
+		// then the sourcemod plugin will only continue with the event if that unnatural value is present
+		SendGlobalGameEvent(
+			"fish_notice",
+			{
+				stun_flags = -22
+				attacker = getuserid(p1),
+				userid = getuserid(p2),
+				weaponid = s1
+				customkill = s2
+				weapon = a
+				weapon_logclassname = t
+				silent_kill = dom
+				assister = r
+			});
+}
+::PluginsConf["PostFuncs"]["DuelWon"] += ";post_DuelWon()";
+```
+Then sourcemod fetches this info as such
+```pawn
+public void OnPluginStart()
+{
+    //... other stuff here
+    //Mellow duel link up
+    HookEvent("fish_notice", event_player_fishnotice, EventHookMode_Pre);
+}
+
+public Action
+event_player_fishnotice(Event event, const char []name, bool dontbroadcast)
+{
+	int userid = GetEventInt(event, "stun_flags");
+	if(userid != -22)
+		return Plugin_Continue;
+
+	int wuid = GetEventInt(event, "attacker");
+	int luid = GetEventInt(event, "userid");
+    int wscore = GetEventInt(event, "weaponid");
+    int lscore = GetEventInt(event, "customkill");
+
+
+    
+    char arena[64];
+    GetEventString(event, "weapon", arena, 64, "");
+    char type[64];
+    GetEventString(event, "weapon_logclassname", type, 64, "");
+
+    bool dom = GetEventBool(event, "silent_kill");
+    
+    int restarts = GetEventInt(event, "assister");
+
+	int winner = GetClientOfUserId(wuid);
+	int loser = GetClientOfUserId(luid);
+
+    PrintToDiscordDuelWin(winner, loser, wscore, lscore, arena, type, dom, restarts, PURPLE); //This is a custom function that handles the logging to the discord server.
+
+	return Plugin_Handled;
+}
+```
+
 ### OnPlayerVoiceline
 Ran whenever a player emits a voiceline, this is useful for detecting taunts beginning or taunt actions. As well as the use of specific voicelines to trigger things, or for manipulating pain sounds.\
 \
