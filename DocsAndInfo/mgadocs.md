@@ -88,6 +88,7 @@ Note the value of the key is not needed. It merely gives the information to prin
     "CustomGameLogic" : ""
     "SwingTrace" : ""
     "Bhopped" : ""
+    "DuelWon" : ""
     "OnPlayerVoiceline" : ""
 } 
 "PostFuncs" : {
@@ -110,6 +111,7 @@ Note the value of the key is not needed. It merely gives the information to prin
     "CustomGameLogic" : ""
     "SwingTrace" : "trace"
     "Bhopped" : "buttons_pressed, buttons, vel, lastjtime, lastVel, player, bhopped, buttons_changed, buttons_released, weapon" //?? This should include most of these values from the playerthink function, but has not been tested. Use with caution, at least the vel value has been supplied
+    "DuelWon" : "p1, p2, s1, s2, a, t, dom = false, r = 0" //p1 is winner, p2 is loser, s1 is winner score, s2 is loser score, a is duelarena, t is dueltype, dom is whether or not it was a dom duel, r is restarts value if it was a dom duel
     "OnPlayerVoiceline" : "player, scene" //Should include at least these, probably others from the player think scope
 }
 ```
