@@ -89,6 +89,7 @@ Note the value of the key is not needed. It merely gives the information to prin
     "SwingTrace" : ""
     "Bhopped" : ""
     "DuelWon" : ""
+    "ConfigRefresh" : ""
     "OnPlayerVoiceline" : ""
 } 
 "PostFuncs" : {
@@ -112,6 +113,7 @@ Note the value of the key is not needed. It merely gives the information to prin
     "SwingTrace" : "trace"
     "Bhopped" : "buttons_pressed, buttons, vel, lastjtime, lastVel, player, bhopped, buttons_changed, buttons_released, weapon" //?? This should include most of these values from the playerthink function, but has not been tested. Use with caution, at least the vel value has been supplied
     "DuelWon" : "p1, p2, s1, s2, a, t, dom = false, r = 0" //p1 is winner, p2 is loser, s1 is winner score, s2 is loser score, a is duelarena, t is dueltype, dom is whether or not it was a dom duel, r is restarts value if it was a dom duel
+    "ConfigRefresh" : ""
     "OnPlayerVoiceline" : "player, scene" //Should include at least these, probably others from the player think scope
 }
 ```
@@ -698,6 +700,19 @@ event_player_fishnotice(Event event, const char []name, bool dontbroadcast)
     PrintToDiscordDuelWin(winner, loser, wscore, lscore, arena, type, dom, restarts, PURPLE); //This is a custom function that handles the logging to the discord server.
 
 	return Plugin_Handled;
+}
+```
+### ConfigRefresh
+When admins use the m/config command there is a function ran to modify the config values used by the script during this session, this config refresh causes issues for plugin scripts which modify values in that config, say for custom gamemodes. This function has pre and post func support so that custom gamemodes can prevent errors occurring when admins change other values in the config.
+As such
+```js
+PluginsConf["PostFuncs"]["ConfigRefresh"] += ";ConcConfigRefresh()"
+///...
+::ConcConfigRefresh <- function()
+{
+	::CustomListMatchip.rawset("conc", ::ConcList)
+	::CustomsList.rawset("conc", [ConcArena])
+	::CustomsList["all"].append(ConcArena)
 }
 ```
 
