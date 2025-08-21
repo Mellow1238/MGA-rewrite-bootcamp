@@ -1,0 +1,29 @@
+This folder contains a number of vscript files, NOT ALL OF THEM ARE NEEDED.
+
+The majority of these will be packed in the maps that use them, some of them can optionally be used on any map but only with admin commands.
+
+The necessary main file which these all build upon is mga_script.nut. This should be packed in every mga map.
+
+Description of other files use cases:
+    mga_conc - Handles conc gamemode, this only work if enabled in a config by an admin, or if set to an arena with an admin command. This should only be packed in mga maps which contain an arena named 'conc'
+
+    mga_demo - This is an optional extension on the main script designed to make DemoGA a thing, it is experimental and can either be packed into a map file along with a map specific config to tell the main script to run it, or it can be ran on the server console by the server operator.
+
+    mga_duelrank - This was designed specifically for our official mga rewrite servers, it links vscript to a sourcemod in order to send duel results to a discord channel, this should never be used unless you are setting up a server and use our own custom discord relaying plugin.
+
+    mga_tanktaunt - Optional addition script to allow anyone to use the tank taunt with m/tank, tank taunts now also fire rockets, and can instakill other players who are also in a tank. You can pack this in your map if you want, but its almost certainly something that a server operator should manage, by modifying their server config to tell the main  script to run this one.
+
+    mga_helpwarn - This is optional for servers that also use sourcemods, it alerts player to the alternate prefix for the vscript chat commands.
+
+    mga_modeduels - This handles jugg and conc duels for the mga_offcuts map. ONLY INCLUDE IT ALONGSIDE mga_conc.nut, even if you only want a juggduel, it requires the conc script.
+
+    mga_skoth - Script which handles speedykoth mga maps, this will be explained in a new separate prefab map in the future as it requires map entities to work.
+
+    mga_utrl - This is an experimental addon, turning the beggars bazooka into a semi-faithful remake of the ut99 rocket launcher, same deal as the tank script above. But even less desirable for a server operator to enable as its very unbalanced.
+
+    powertest - This is for a secret on mga_bootcamp, only bother including this file in your server or personal tf folder if you are running the NOSCRIPT mga_bootcamp_..._NoSc map file.
+
+_________________NOW THE BHOPUI_________________
+This entire folder structure should ONLY EVER BE PACKED INSIDE THE MAP.
+This is because the vscript file requires the models and textures for the bhop style ui.
+A map maker must pack both, otherwise issues occur, and running this on a server with a map that does not pack the needed assets will cause severe issues.

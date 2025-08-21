@@ -1,0 +1,52 @@
+This folder includes a playable prefabs map to show off features, and also includes the map source so map makers can reuse these prefabs and understand how to construct an mga map that fits with the mga rewrite script.
+
+ENSURE YOU HAVE AN FGD WHICH INCLUDES 'point_worldtext'
+Use the below code in a .fgd file and add it in hammer settings if not
+
+
+@PointClass base(Targetname, Parentname, Angles) worldtext() = point_worldtext : 
+    "An entity that displays a text message oriented in the world, at its origin."
+[
+    message(string) : "Entity Message" : "" : "Text Message. Newline characters are accepted"
+    textsize(float) : "Text Size" : 10 : "Text Size."
+    textspacingX(float) : "Text Spacing X" : 0 : "Spacing between each letter along X axis"
+    textspacingY(float) : "Text Spacing Y" : 0 : "Spacing between each letter along Y axis"
+    color(color255) : "Color" : "255 255 255 255"
+    font(choices) : "Font" : "0" =
+    [
+        0: "TF2 Build"
+        1: "TF2 Build (no outline/shadow)"
+        2: "TF2"
+        3: "TF2 (no outline/shadow)"
+        4: "Liberation Sans"
+        5: "Liberation Sans (no outline/shadow)"
+        6: "TF2 Professor"
+        7: "TF2 Professor (no outline/shadow)"
+        8: "Roboto Mono"
+        9: "Roboto Mono (no outline/shadow)"
+        10: "Roboto Mono (shadow only)"
+        11: "Roboto Mono (green glow, soft edges)"
+        12: "TF2 Build (soft edges)"
+    ]
+    orientation(choices) : "Orientation" : "0" =
+    [
+        0: "Stationary"
+        1: "Face player"
+        2: "Ignore pitch"
+    ]
+    rainbow(choices) : "Rainbow" : 0 =
+    [
+        0 : "No"
+        1 : "Yes"
+    ]
+
+    // Inputs
+    input SetText(string) : "Set the message text."
+    input SetTextSize(float) : "Set the message text size."
+    input SetTextSpacingX(float) : "Set the spacing between letters along the X axis."
+    input SetTextSpacingY(float) : "Set the spacing between letters along the Y axis."
+    input SetColor(string) : "Set the message color."
+    input SetFont(integer) : "Set the font."
+    input SetOrientation(integer) : "Set the orientation."
+    input SetRainbow(integer) : "Enable rainbow text."
+]
