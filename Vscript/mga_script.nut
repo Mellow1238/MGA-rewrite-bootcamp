@@ -1128,21 +1128,21 @@ local testtab = this
 	local self = activator
 	if (self.GetScriptScope().canCrit == false)
 	{
-		local weapon = NetProps.GetPropEntityArray(self, "m_hMyWeapons", 0);
-		if (weapon)
-		{
-			local weaponIndex = NetProps.GetPropInt(weapon, "m_AttributeManager.m_Item.m_iItemDefinitionIndex");
-			if (weaponIndex == 237) {
-				EmitSoundEx({
-				sound_name = "BlastJump.Whistle",
-				flags = 0,
-				volume = 0.8,
-				channel = 0,
-				entity = self,
-				filter_type = Constants.EScriptRecipientFilter.RECIPIENT_FILTER_GLOBAL
-				});
-			}
-		}
+		// local weapon = NetProps.GetPropEntityArray(self, "m_hMyWeapons", 0);
+		// if (weapon)
+		// {
+		// 	local weaponIndex = NetProps.GetPropInt(weapon, "m_AttributeManager.m_Item.m_iItemDefinitionIndex");
+		// 	if (weaponIndex == 237) {
+		// 		EmitSoundEx({
+		// 		sound_name = "BlastJump.Whistle",
+		// 		flags = 0,
+		// 		volume = 0.8,
+		// 		channel = 0,
+		// 		entity = self,
+		// 		filter_type = Constants.EScriptRecipientFilter.RECIPIENT_FILTER_GLOBAL
+		// 		});
+		// 	}
+		// }
 	self.GetScriptScope().canCrit <- true
 	}
 
