@@ -392,7 +392,7 @@ __CollectGameEventCallbacks(EventsTable)
 		if (player.GetScriptScope().caber != null) {
 			local weapon = player.GetScriptScope().caber
 
-            if (GetPropBool(weapon, "m_iDetonated") == true) {
+            if (NetProps.GetPropBool(weapon, "m_iDetonated") == true) {
                 // printl(player.GetScriptScope().cabertime)
                 if (player.GetScriptScope().cabertime == null)
                 {

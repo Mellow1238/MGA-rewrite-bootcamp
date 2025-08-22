@@ -4185,8 +4185,8 @@ compiledscript();
             return;
         func.acall([scope].extend(params));
     }, scoperef];
-    SetPropBool(tmpEnt, "m_bForcePurgeFixedupStrings", true);
-    SetPropString(tmpEnt, "m_iName", code);
+    NetProps.SetPropBool(tmpEnt, "m_bForcePurgeFixedupStrings", true);
+    NetProps.SetPropString(tmpEnt, "m_iName", code);
     EntFireByHandle(main_script_entity, "RunScriptCode", code, delay, null, null);
     EntFireByHandle(tmpEnt, "Kill", null, delay, null, null)
 }

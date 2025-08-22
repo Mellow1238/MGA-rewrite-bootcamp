@@ -203,7 +203,7 @@ if (weaponIndex == 730 && self.GetActiveWeapon() == weapon)
 }
 
 if (Time() < player.GetScriptScope().lastfire + 0.5)
-{NetProps.SetPropInt(player, "m_nButtons", buttons2 & ~IN_ATTACK);}
+{NetProps.SetPropInt(player, "m_nButtons", buttons2 & ~Constants.FButtons.IN_ATTACK);}
 
 if (/* NetProps.GetPropFloat(weapon, "m_flLastFireTime") > player.GetScriptScope().lastfire + 0.5 ||  */Time() > player.GetScriptScope().lastfire + 0.5)
 {
@@ -226,7 +226,7 @@ if (/* NetProps.GetPropFloat(weapon, "m_flLastFireTime") > player.GetScriptScope
 						ClientPrint(player,4,"switched to grenade mode")
 						player.GetScriptScope().utgmode <- true
 					}
-					SetPropInt(self, "m_afButtonForced", 0);
+					NetProps.SetPropInt(self, "m_afButtonForced", 0);
 				}
 			}
 
@@ -257,7 +257,7 @@ if (/* NetProps.GetPropFloat(weapon, "m_flLastFireTime") > player.GetScriptScope
 
 		if (buttons2 & Constants.FButtons.IN_ATTACK)
 		{
-		  NetProps.SetPropInt(player, "m_nButtons", buttons2 & ~IN_ATTACK); // while performing primary attack input, prevent secondary attack input.
+		  NetProps.SetPropInt(player, "m_nButtons", buttons2 & ~Constants.FButtons.IN_ATTACK); // while performing primary attack input, prevent secondary attack input.
 		}
 
 			// printl("max")
