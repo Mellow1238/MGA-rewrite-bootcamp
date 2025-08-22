@@ -9,7 +9,23 @@ PluginsConf["CommandsHelp"].rawset("timecheck", "- Lists time remaining for koth
 
 ::sKothLogic <- function()
 {
-	local available = true
+
+	for (local i = 1; i <= MaxPlayers ; i++)
+	{
+		local kplayer = PlayerInstanceFromIndex(i);
+		if (!kplayer || !kplayer.IsPlayer())
+		{
+			continue;
+		}
+		if (!kplayer.GetScriptScope().inMga)
+			continue;
+
+		kothtrigcheck(kplayer)
+
+	}
+
+
+
 
 	foreach (arena, playerarray in KothPlayerTable)
 	{
@@ -29,6 +45,7 @@ PluginsConf["CommandsHelp"].rawset("timecheck", "- Lists time remaining for koth
 
 	foreach (arenaname, holdarray in KothHolderTable)
 	{
+		local available = false
 
 		if (KothPlayerTable[arenaname].len() < 2)
 		{
@@ -222,38 +239,71 @@ PluginsConf["CommandsHelp"].rawset("timecheck", "- Lists time remaining for koth
 }
 
 
-function kothhold(arenaname, add)
+function kothhold(arenaname, add, player)
 {
 local addstat = false
 if (add == 1)
 {addstat = true}
 
-// printl(activator.GetTeam())
+// printl(player.GetTeam())
 // printl(arenaname)
 // printl(addstat)
 
 local team = null
-if (activator.GetTeam() == 2)
+if (player.GetTeam() == 2)
 { team = 0}
-if (activator.GetTeam() == 3)
+if (player.GetTeam() == 3)
 { team = 1}
 
 if (addstat)
 {
-	KothHolderTable[arenaname][team].append(activator)
-	// printl("added "+activator+" to "+arenaname)
+	if ((KothHolderTable[arenaname][0].find(player) == null) && (KothHolderTable[arenaname][1].find(player) == null))
+	KothHolderTable[arenaname][team].append(player)
+	// printl("added "+player+" to "+arenaname)
 }
 else
 {
-	if (KothHolderTable[arenaname][0].find(activator) != null) {
-		KothHolderTable[arenaname][0].remove(KothHolderTable[arenaname][0].find(activator))}
-	if (KothHolderTable[arenaname][1].find(activator) != null) {
-		KothHolderTable[arenaname][1].remove(KothHolderTable[arenaname][1].find(activator))}
-		// printl("removed "+activator+" from "+arenaname)
+	if (KothHolderTable[arenaname][0].find(player) != null) {
+		KothHolderTable[arenaname][0].remove(KothHolderTable[arenaname][0].find(player))}
+	if (KothHolderTable[arenaname][1].find(player) != null) {
+		KothHolderTable[arenaname][1].remove(KothHolderTable[arenaname][1].find(player))}
+		// printl("removed "+player+" from "+arenaname)
 
 }
 
 }
+
+
+kothtrigcheck <- function(player)
+{
+	//KOTH VOL CHECK
+	if (("KothTrigs" in getroottable()) && (player.GetTeam() == 2 || player.GetTeam() == 3)) {
+		local ploc = (player.GetOrigin())
+		local holding = false
+		if (player.GetScriptScope().arena[1] in KothTimerTable)
+		{
+			foreach (vol in KothTrigs[player.GetScriptScope().arena[1]])
+			{
+				if (ploc.x >= vol[0].x && ploc.x <= vol[1].x &&
+				ploc.y >= vol[0].y && ploc.y <= vol[1].y &&
+				ploc.z >= vol[0].z && ploc.z <= vol[1].z) {
+					kothhold(player.GetScriptScope().arena[1], 1, player)
+					holding = true
+					break
+				}
+
+			}
+
+			if (!holding)
+			{
+				kothhold(player.GetScriptScope().arena[1], 0, player)
+			}
+		}
+
+	}
+}
+
+
 
 function kothtimeradd(arenaname, time)
 {
@@ -314,6 +364,32 @@ getroottable()[EventsID] <-
 		}
 
 }
+
+	OnGameEvent_teamplay_round_start = function(params)
+	{
+		//FETCH KOTH TRIGGERS
+		::KothTrigs <- {};
+		local voltest = null
+		while(voltest = Entities.FindByName(voltest, "kothtrig_*")) {
+		local max = (voltest.GetOrigin() + voltest.GetBoundingMaxs())
+		local min = (voltest.GetOrigin() - voltest.GetBoundingMaxs())
+		local volname = (split(voltest.GetName(), "_")[1])
+		if (!(volname in KothTrigs))
+		{KothTrigs.rawset(volname, [[min,max]])}
+		else
+		{KothTrigs[volname].append([min,max])}
+		}
+
+		foreach (key, value in KothTrigs)
+		{
+			printl(value.len() + "	"+key)
+
+		}
+
+
+	}
+
+
 }
 local EventsTable = getroottable()[EventsID]
 foreach (name, callback in EventsTable) EventsTable[name] = callback.bindenv(this)
