@@ -280,7 +280,7 @@ kothtrigcheck <- function(player)
 	if (("KothTrigs" in getroottable()) && (player.GetTeam() == 2 || player.GetTeam() == 3)) {
 		local ploc = (player.GetOrigin())
 		local holding = false
-		if (player.GetScriptScope().arena[1] in KothTimerTable)
+		if (player.GetScriptScope().arena[1] in KothTimerTable && player.GetScriptScope().arena[1] in KothTrigs)
 		{
 			foreach (vol in KothTrigs[player.GetScriptScope().arena[1]])
 			{
