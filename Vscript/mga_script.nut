@@ -414,7 +414,7 @@ printl("running plugin "+i)}
 
 
 //Define other globals for spawn collecting on script start
-::PopCheck <- [];
+// ::PopCheck <- [];
 
 ::ASpawntab <- {};
 ::DSpawntab <- {};
@@ -659,7 +659,8 @@ Currently practice = "+Config["Jpractice"],@"
 	TextWrapSend(player, 2, ("\n\n_____________________________PLUGIN COMMANDS_____________________________\n"))
 	foreach (key, value in PluginsConf["CommandsHelp"])
 	{
-		TextWrapSend(player, 2, ("m/"+key+" "+value+"\n"))
+		if (!startswith(key, "."))
+		{TextWrapSend(player, 2, ("m/"+key+" "+value+"\n"))}
 	}
 
     if (Config["Admins"].find(GetPlayerNetID(player)) != null)
@@ -2458,35 +2459,37 @@ getroottable()[EventsID] <-
             {
             local message = ("");
             foreach (i, value in DSpawntab) {
-                if (CheckArenaPop(i) > 0) {
-                        if (::PopCheck[0].GetScriptScope().invited != true) {
+				local arenapop = CheckArenaPop(i)
+                if (arenapop[0] > 0) {
+                        if (arenapop[1].GetScriptScope().invited != true) {
                         message = (message + "\n")
-                        if (CheckArenaPop(i) == 1){
-                            message = (message + (i+" t:"+ "\x07FFFF00"+::PopCheck[0].GetScriptScope().dtype+"\x01"+ " : "+::GetColouredName(::PopCheck[0])))
+                        if (arenapop[0] == 1){
+                            message = (message + (i+" t:"+ "\x07FFFF00"+arenapop[1].GetScriptScope().dtype+"\x01"+ " : "+::GetColouredName(arenapop[1])))
                         }
-                        if (CheckArenaPop(i) == 2){
-                            if (::PopCheck[0].GetScriptScope().dtype == "ft10" || ::PopCheck[0].GetScriptScope().dtype == "bhop" || ::PopCheck[0].GetScriptScope().dtype == "vel") {
-                            message = (message + (i+" t:\x07FFFF00"+::PopCheck[0].GetScriptScope().dtype+"\x01 : "+::GetColouredName(::PopCheck[0])+" v "+::GetColouredName(::PopCheck[1]))+" ("+::PopCheck[0].GetScriptScope().score+("/")+::PopCheck[1].GetScriptScope().score+")")
+                        if (arenapop[0] == 2){
+                            if (arenapop[1].GetScriptScope().dtype == "ft10" || arenapop[1].GetScriptScope().dtype == "bhop" || arenapop[1].GetScriptScope().dtype == "vel") {
+                            message = (message + (i+" t:\x07FFFF00"+arenapop[1].GetScriptScope().dtype+"\x01 : "+::GetColouredName(arenapop[1])+" v "+::GetColouredName(arenapop[2]))+" ("+arenapop[1].GetScriptScope().score+("/")+arenapop[2].GetScriptScope().score+")")
                             }
-                            if (::PopCheck[0].GetScriptScope().dtype == "dom") {
-                                message = (message + (i+" t:\x07FFFF00dom\x01 : "+::GetColouredName(::PopCheck[0])+" v "+::GetColouredName(::PopCheck[1]))+" ("+::PopCheck[0].GetScriptScope().score+("/")+::PopCheck[1].GetScriptScope().score+")"+" r:("+(::PopCheck[0].GetScriptScope().restarts)+"/4)")
+                            if (arenapop[1].GetScriptScope().dtype == "dom") {
+                                message = (message + (i+" t:\x07FFFF00dom\x01 : "+::GetColouredName(arenapop[1])+" v "+::GetColouredName(arenapop[2]))+" ("+arenapop[1].GetScriptScope().score+("/")+arenapop[2].GetScriptScope().score+")"+" r:("+(arenapop[1].GetScriptScope().restarts)+"/4)")
                             }
                         }
                 }}
 
             }
             foreach (i, value in DISpawntab) {
-                if (CheckArenaPop(i) > 0) {
+				local arenapop = CheckArenaPop(i)
+                if (arenapop[0] > 0) {
                         message = (message + "\n")
-                        if (CheckArenaPop(i) == 1){
-                            message = (message + (i+" t:"+ "\x07FFFF00"+::PopCheck[0].GetScriptScope().dtype+"\x01"+ " : "+::GetColouredName(::PopCheck[0])))
+                        if (arenapop[0] == 1){
+                            message = (message + (i+" t:"+ "\x07FFFF00"+arenapop[1].GetScriptScope().dtype+"\x01"+ " : "+::GetColouredName(arenapop[1])))
                         }
-                        if (CheckArenaPop(i) == 2){
-                            if (::PopCheck[0].GetScriptScope().dtype == "ft10" || ::PopCheck[0].GetScriptScope().dtype == "bhop" || ::PopCheck[0].GetScriptScope().dtype == "vel") {
-                            message = (message + (i+" t:\x07FFFF00"+::PopCheck[0].GetScriptScope().dtype+"\x01 : "+::GetColouredName(::PopCheck[0])+" v "+::GetColouredName(::PopCheck[1]))+" ("+::PopCheck[0].GetScriptScope().score+("/")+::PopCheck[1].GetScriptScope().score+")")
+                        if (arenapop[0] == 2){
+                            if (arenapop[1].GetScriptScope().dtype == "ft10" || arenapop[1].GetScriptScope().dtype == "bhop" || arenapop[1].GetScriptScope().dtype == "vel") {
+                            message = (message + (i+" t:\x07FFFF00"+arenapop[1].GetScriptScope().dtype+"\x01 : "+::GetColouredName(arenapop[1])+" v "+::GetColouredName(arenapop[2]))+" ("+arenapop[1].GetScriptScope().score+("/")+arenapop[2].GetScriptScope().score+")")
                             }
-                            if (::PopCheck[0].GetScriptScope().dtype == "dom") {
-                                message = (message + (i+" t:\x07FFFF00dom\x01 : "+::GetColouredName(::PopCheck[0])+" v "+::GetColouredName(::PopCheck[1]))+" ("+::PopCheck[0].GetScriptScope().score+("/")+::PopCheck[1].GetScriptScope().score+")"+" r:("+(::PopCheck[0].GetScriptScope().restarts)+"/4)")
+                            if (arenapop[1].GetScriptScope().dtype == "dom") {
+                                message = (message + (i+" t:\x07FFFF00dom\x01 : "+::GetColouredName(arenapop[1])+" v "+::GetColouredName(arenapop[2]))+" ("+arenapop[1].GetScriptScope().score+("/")+arenapop[2].GetScriptScope().score+")"+" r:("+(arenapop[1].GetScriptScope().restarts)+"/4)")
                             }
                         }
                 }
@@ -2519,7 +2522,7 @@ getroottable()[EventsID] <-
                     TextWrapSend(player,3,(smpref+"Available players:"+message))
                 }
                 if (args.len() >= 2) {
-                    if  (((player.GetScriptScope().arena[0] == "D" || player.GetScriptScope().arena[0] == "DI") && CheckArenaPop(player.GetScriptScope().arena[1]) < 2))
+                    if  (((player.GetScriptScope().arena[0] == "D" || player.GetScriptScope().arena[0] == "DI") && CheckArenaPop(player.GetScriptScope().arena[1])[0] < 2))
                     {
 						local string = false
                         local invp = null
@@ -2540,7 +2543,7 @@ getroottable()[EventsID] <-
 							if (!fetchedp.GetScriptScope().inMga)
 								continue;
 
-							if ((NetProps.GetPropString(fetchedp, "m_szNetname")).find(args[1]) != null)
+							if ((NetProps.GetPropString(fetchedp, "m_szNetname")).tolower().find(args[1].tolower()) != null)
 							{
 								invp = fetchedp
 								break
@@ -2574,7 +2577,7 @@ getroottable()[EventsID] <-
 						if (args.len() > 2)
 						{
 
-							if ((AvailableD.find(args[2]) != null) && CheckArenaPop(args[2]) == 0) {
+							if ((AvailableD.find(args[2]) != null) && CheckArenaPop(args[2])[0] == 0) {
 
 
 							if (args.len() > 3)
@@ -2583,7 +2586,7 @@ getroottable()[EventsID] <-
 								{
 									userid = GetPlayerUserID(player)
 									priority = 1
-									text = ("m/duel "+args[2]+" "+args[3])
+									text = (Config["Prefix1"]+"duel "+args[2]+" "+args[3])
 								})
 							}
 							else
@@ -2592,7 +2595,7 @@ getroottable()[EventsID] <-
 								{
 									userid = GetPlayerUserID(player)
 									priority = 1
-									text = ("m/duel "+args[2])
+									text = (Config["Prefix1"]+"duel "+args[2])
 								})
 							}
 
@@ -2600,7 +2603,7 @@ getroottable()[EventsID] <-
 							{
 								userid = GetPlayerUserID(player)
 								priority = 1
-								text = ("m/invite "+args[1])
+								text = (Config["Prefix1"]+"invite "+args[1])
 							})
 
 						}
@@ -2622,8 +2625,9 @@ getroottable()[EventsID] <-
             {
                 if (player.GetScriptScope().invite[0] != null)
                 {
-                    if (CheckArenaPop(player.GetScriptScope().invite[0]) == 1) {
-                        ::PopCheck[0].GetScriptScope().invited <- false
+					local arenapop = CheckArenaPop(player.GetScriptScope().invite[0])
+                    if (arenapop[0] == 1) {
+                        arenapop[1].GetScriptScope().invited <- false
                     }
                     else {TextWrapSend(player, 3, (smpref+"\x07940012"+"Opponent left"))
                     player.GetScriptScope().invite <- [null, null]
@@ -2633,7 +2637,7 @@ getroottable()[EventsID] <-
                     {
                         userid = GetPlayerUserID(player)
                         priority = 1
-                        text = ("m/duel "+player.GetScriptScope().invite[0])
+                        text = (Config["Prefix1"]+"duel "+player.GetScriptScope().invite[0])
                     })
                     player.GetScriptScope().invite <- [null, null]
                 }
@@ -2645,9 +2649,10 @@ getroottable()[EventsID] <-
                 if (player.GetScriptScope().invite[0] != null)
                 {
                     TextWrapSend(player, 3, (smpref+"Invitation declined"))
-                    if (CheckArenaPop(player.GetScriptScope().invite[0]) == 1) {
-                        ::PopCheck[0].GetScriptScope().invited <- false
-                        TextWrapSend(::PopCheck[0], 3, (smpref+"Outbound invite declined"))
+					local arenapop = CheckArenaPop(player.GetScriptScope().invite[0])
+                    if (arenapop[0] == 1) {
+                        arenapop[1].GetScriptScope().invited <- false
+                        TextWrapSend(arenapop[1], 3, (smpref+"Outbound invite declined"))
                     }
                     player.GetScriptScope().invite <- [null, null]
 
@@ -2664,12 +2669,13 @@ getroottable()[EventsID] <-
                 if (args.len() > 1) {
                 local arenaval = (args[1])
                 if (AvailableD.find(arenaval) != null || AvailableD.len() == 0) {
-                if (CheckArenaPop(arenaval) < 2) {
+				local arenapop = CheckArenaPop(arenaval)
+                if (arenapop[0] < 2) {
 
 
 
         ///FIX------------------
-                if (::PopCheck.len() == 0) {
+                if (arenapop[0] == 0) {
                     TextWrapSend(player, 3, (smpref+"entering "+arenaval+" duel arena"))
                     if (args.len() == 3) {
                         if (args[2] == "ft10" || (Config["AllowedDtypes"].find(args[2]) != null)) {
@@ -2691,12 +2697,12 @@ getroottable()[EventsID] <-
                     player.GetScriptScope().score <- 0
                 }
                 else {
-                    if (::PopCheck[0].GetScriptScope().waitingon == false) {
+                    if (arenapop[1].GetScriptScope().waitingon == false) {
 
-                        if (::PopCheck[0].GetScriptScope().invited == true && player.GetScriptScope().invite[0] != ::PopCheck[0].GetScriptScope().arena[1])
+                        if (arenapop[1].GetScriptScope().invited == true && player.GetScriptScope().invite[0] != arenapop[1].GetScriptScope().arena[1])
                         {TextWrapSend(player, 3, (smpref+"\x07940012"+"Opponent is waiting on another")); return}
 
-                        if (::PopCheck[0] == player) {
+                        if (arenapop[1] == player) {
                             if (args.len() == 3) {
                                 if (args[2] != player.GetScriptScope().dtype) {
                                     if (args[2] == "ft10" || (Config["AllowedDtypes"].find(args[2]) != null)) {
@@ -2717,14 +2723,14 @@ getroottable()[EventsID] <-
                         }
                         return
                         }
-                TextWrapSend(player, 3, (smpref+"10 seconds until entering "+arenaval+" duel arena with "+ (::GetColouredName(::PopCheck[0])+" t:\x07FFFF00"+::PopCheck[0].GetScriptScope().dtype+"\x01")))
-                TextWrapSend(::PopCheck[0], 3, (smpref+"10 seconds until "+::GetColouredName(player)+ " begins a duel with you t:\x07FFFF00"+::PopCheck[0].GetScriptScope().dtype+"\x01"))
+                TextWrapSend(player, 3, (smpref+"10 seconds until entering "+arenaval+" duel arena with "+ (::GetColouredName(arenapop[1])+" t:\x07FFFF00"+arenapop[1].GetScriptScope().dtype+"\x01")))
+                TextWrapSend(arenapop[1], 3, (smpref+"10 seconds until "+::GetColouredName(player)+ " begins a duel with you t:\x07FFFF00"+arenapop[1].GetScriptScope().dtype+"\x01"))
 
                 player.GetScriptScope().waitend <- (Time() + 10);
                 player.GetScriptScope().waiting <- true
-                ::PopCheck[0].GetScriptScope().waitingon <- true
-                player.GetScriptScope().adest <- ::PopCheck[0].GetScriptScope().arena;
-                player.GetScriptScope().opp <- ::PopCheck[0]
+                arenapop[1].GetScriptScope().waitingon <- true
+                player.GetScriptScope().adest <- arenapop[1].GetScriptScope().arena;
+                player.GetScriptScope().opp <- arenapop[1]
                 }
                 else {TextWrapSend(player, 3, (smpref+"\x07940012"+"Opponent is waiting on another"))}
                 }
@@ -2804,7 +2810,7 @@ getroottable()[EventsID] <-
         }
 
 		//Check for plugin commands
-		if (new in PluginsConf["CommandsHelp"])
+		if (new in PluginsConf["CommandsHelp"] || "."+new in PluginsConf["CommandsHelp"])
 		{
 			validcmd += 1
 		}
@@ -2864,18 +2870,23 @@ __CollectGameEventCallbacks(EventsTable)
 //Define function for checking arena populations
 ::CheckArenaPop <- function(ArenaNum)
 {
-::PopCheck.clear()
+local PopCheck = []
 for (local i = 1; i <= MaxPlayers ; i++)
 {
     local player = PlayerInstanceFromIndex(i)
     if (player == null) continue
     if (player.GetScriptScope().arena[1] == ArenaNum){
-    ::PopCheck.append(player)
+    PopCheck.append(player)
     }
 
 
 }
-return (::PopCheck.len())
+switch (PopCheck.len())
+{
+	case 0: return ([0]);break
+	case 1: return ([1, PopCheck[0]]);break
+	case 2: return ([2, PopCheck[0], PopCheck[1]]);break
+}
 }
 
 
@@ -3017,15 +3028,16 @@ return (::PopCheck.len())
 			}
 			else {return;}
 		}
-		if (CheckArenaPop(arena) == 2) {
-		local p1 = NetProps.GetPropString(::PopCheck[0], "m_szNetname");
-		local p2 = NetProps.GetPropString(::PopCheck[1], "m_szNetname");
+		local arenapop = CheckArenaPop(arena)
+		if (arenapop[0] == 2) {
+		local p1 = NetProps.GetPropString(arenapop[1], "m_szNetname");
+		local p2 = NetProps.GetPropString(arenapop[2], "m_szNetname");
 		local score = null
-		if (::PopCheck[0].GetScriptScope().dtype == "dom") {
-			score = (p1+": "+::PopCheck[0].GetScriptScope().score+", "+p2+": "+::PopCheck[1].GetScriptScope().score+" r:("+(::PopCheck[0].GetScriptScope().restarts)+"/4)")
+		if (arenapop[1].GetScriptScope().dtype == "dom") {
+			score = (p1+": "+arenapop[1].GetScriptScope().score+", "+p2+": "+arenapop[2].GetScriptScope().score+" r:("+(arenapop[1].GetScriptScope().restarts)+"/4)")
 		}
 		else {
-		score = p1+": "+::PopCheck[0].GetScriptScope().score+", "+p2+": "+::PopCheck[1].GetScriptScope().score
+		score = p1+": "+arenapop[1].GetScriptScope().score+", "+p2+": "+arenapop[2].GetScriptScope().score
 		}
 		// ShowText(player, score)
 		ShowAnyText(player,score,text_ent)
@@ -3113,6 +3125,7 @@ for (local i = 1; i <= MaxPlayers ; i++)
 			if (rocket.GetOwner() == player) {
 			rockets.append(rocket)
 			rocket.SetOwner(null)
+			NetProps.SetPropBool(rocket, "m_bForcePurgeFixedupStrings", true)
 			}
 		}
 
@@ -3210,9 +3223,9 @@ TextWrapSend(player,loc,string)
 //Function for sending messages during duels
 ::SpecDuelMsg <- function(arena, deadp, killp, dtype)
 {
-CheckArenaPop(arena)
-local p1 = ::GetColouredName(::PopCheck[0])
-local p2 = ::GetColouredName(::PopCheck[1])
+local arenapop = CheckArenaPop(arena)
+local p1 = ::GetColouredName(arenapop[1])
+local p2 = ::GetColouredName(arenapop[2])
 local prefix = (smpref+"\x07FFFF00"+arena+" "+dtype+"\x01: ")
 for (local i = 1; i <= MaxPlayers ; i++)
 {
@@ -3223,13 +3236,13 @@ for (local i = 1; i <= MaxPlayers ; i++)
 		// printl("spec test")
 			if (dtype == "ft10" || dtype == "bhop" || dtype == "vel") {
 				if (dtype != "bhop") {
-					TextWrapSend(player, 3, (prefix+p1+": "+::PopCheck[0].GetScriptScope().score+", "+p2+": "+::PopCheck[1].GetScriptScope().score))
+					TextWrapSend(player, 3, (prefix+p1+": "+arenapop[1].GetScriptScope().score+", "+p2+": "+arenapop[2].GetScriptScope().score))
 				} else {
-					TextWrapSend(player, 3, (prefix+p1+": "+::PopCheck[0].GetScriptScope().score+", "+p2+": "+::PopCheck[1].GetScriptScope().score+ " "+combocheck(killp.GetScriptScope().hopnum)))
+					TextWrapSend(player, 3, (prefix+p1+": "+arenapop[1].GetScriptScope().score+", "+p2+": "+arenapop[2].GetScriptScope().score+ " "+combocheck(killp.GetScriptScope().hopnum)))
 				}
 			}
 			if (dtype == "dom") {
-				TextWrapSend(player, 3, (prefix+p1+": "+::PopCheck[0].GetScriptScope().score+", "+p2+": "+::PopCheck[1].GetScriptScope().score+" r:("+(killp.GetScriptScope().restarts)+"/4)"))
+				TextWrapSend(player, 3, (prefix+p1+": "+arenapop[1].GetScriptScope().score+", "+p2+": "+arenapop[2].GetScriptScope().score+" r:("+(killp.GetScriptScope().restarts)+"/4)"))
 			}
 			dScoreCheck(player.GetScriptScope().arena[1], player, true)
 	}
@@ -3260,6 +3273,8 @@ function combocheck(params) {
 	local vel = rocket.GetAbsVelocity()
 	local ang = rocket.GetAbsAngles()
 
+	NetProps.SetPropBool(rocket, "m_bForcePurgeFixedupStrings", true)
+
 	if (params == 1) {
 	rocket.SetAbsVelocity(Vector(vel.x,vel.y,-vel.z))
 	rocket.SetAbsAngles(QAngle(360-ang.x, ang.y, ang.z))
@@ -3274,13 +3289,21 @@ function combocheck(params) {
 ::TestExplodeVol <- function(box) {
 	local ent = null
 	local rocket = activator
-	ent = Entities.FindByName(ent, ("Air_"+box.tostring()))
+
+	NetProps.SetPropBool(rocket, "m_bForcePurgeFixedupStrings", true)
+
+	local text = ("Air_" + box.tostring())
+	local test_relay = SpawnEntityFromTable("logic_relay",
+	{
+		targetname = text
+	});
+	NetProps.SetPropBool(test_relay, "m_bForcePurgeFixedupStrings", true)
+	ent = Entities.FindByName(ent, (test_relay.GetName()))
+	NetProps.SetPropBool(ent, "m_bForcePurgeFixedupStrings", true)
+	test_relay.Destroy()
 	try {
 	ent.SetAbsOrigin(rocket.GetOrigin())
 	} catch(exception) {return}
-
-
-
 }
 
 
@@ -3548,7 +3571,17 @@ function portaldoor(params)
 			local owner = NetProps.GetPropEntity(ent, "m_hOwner");
 			if (owner != null) {
 				OnPlayerVoiceline(owner, ent);
-				ent.KeyValueFromString("classname", "_scene");
+
+				local text = ("_scene")
+				local test_relay = SpawnEntityFromTable("logic_relay",
+				{
+					targetname = text
+				});
+				NetProps.SetPropBool(test_relay, "m_bForcePurgeFixedupStrings", true)
+
+
+				ent.KeyValueFromString("classname", test_relay.GetName());
+				test_relay.Destroy()
 			}
 		}
 
@@ -4234,9 +4267,10 @@ compiledscript();
         if (player.GetScriptScope().invite[0] != null)
         {
             if (Time() > player.GetScriptScope().invite[1]) {
-                if (CheckArenaPop(player.GetScriptScope().invite[0]) == 1) {
-                    ::PopCheck[0].GetScriptScope().invited <- false
-                    TextWrapSend(::PopCheck[0], 3, (smpref+"Outbound invite expired"))
+				local arenapop = CheckArenaPop(player.GetScriptScope().invite[0])
+                if (arenapop[0] == 1) {
+                    arenapop[1].GetScriptScope().invited <- false
+                    TextWrapSend(arenapop[1], 3, (smpref+"Outbound invite expired"))
                 }
                 player.GetScriptScope().invite <- [null, null]
                 TextWrapSend(player, 3, (smpref+"Pending invite expired"))
@@ -4431,7 +4465,7 @@ if (!("bot" in SpawnTypes["T"])) {
 		{
 			userid = GetPlayerUserID(player)
 			priority = 1
-			text = ("m/clearpos")
+			text = (Config["Prefix1"]+"clearpos")
 		})
 	}
     if (endswith(escape(name), "Soldier/low/1150.vcd"))
@@ -4440,7 +4474,7 @@ if (!("bot" in SpawnTypes["T"])) {
 		{
 			userid = GetPlayerUserID(player)
 			priority = 1
-			text = ("m/startpos")
+			text = (Config["Prefix1"]+"startpos")
 		})
 	}
     if (endswith(escape(name), "Soldier/low/1148.vcd"))
@@ -4449,7 +4483,7 @@ if (!("bot" in SpawnTypes["T"])) {
 		{
 			userid = GetPlayerUserID(player)
 			priority = 1
-			text = ("m/dummy default2")
+			text = (Config["Prefix1"]+"dummy default2")
 		})
 	}
     if (endswith(escape(name), "Soldier/low/1146.vcd"))
@@ -4458,7 +4492,7 @@ if (!("bot" in SpawnTypes["T"])) {
 		{
 			userid = GetPlayerUserID(player)
 			priority = 1
-			text = ("m/dummy default1")
+			text = (Config["Prefix1"]+"dummy default1")
 		})
 	}
 	}

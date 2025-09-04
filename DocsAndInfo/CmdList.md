@@ -61,6 +61,12 @@
 This command can also be used again whilst waiting for someone to join your duel in order to change the duel type without rejoining the duel arena
 ```
 
+##### m/invite `<playername> <duel arena> <duel type>` - challenge a specific player to a duel in an arena, by name. Locks duel until they use m/accept or m/decline
+
+##### m/accept - accept a pending duel invite
+
+##### m/decline - deline a pending duel invite
+
 ##### m/spec `<duel arena>` - allows the user to receive score updates on the chosen duel arena, useful for the tournament.
 
 
