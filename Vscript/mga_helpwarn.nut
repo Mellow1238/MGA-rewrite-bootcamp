@@ -2,7 +2,7 @@
 {
 "help" : ["info","commands","cmds","helpme", "helpmenu","help!","HELP","HELP!"]
 "mga" : ["random"]
-"arena" : ["area","zone"]
+"arena" : ["area","zone","map","maps"]
 "r" : ["lobby", "home", "spawn", "respawn", "restart", "hub"]
 "painsnd" : ["painsound", "hurtsound", "hurtsnd","hurt", "ouch", "fallsound", "fallsnd"]
 "killinfo" : ["deathinfo","stats","killstats","deathstats","velstats"]
@@ -16,9 +16,9 @@
 "duels" : ["battles", "dueling", "fights"]
 "spec" : ["spectate", "specduel"]
 "invite" : ["challenge","inv"]
-"accept" : ["yes"]
-"decline" : ["no"]
-"style" : ["stylemeter"]
+"accept" : ["yes","hellyeahdude"]
+"decline" : ["no","nowaybro"]
+"style" : ["stylemeter","combo"]
 }
 
 
@@ -46,8 +46,7 @@ getroottable()[EventsID] <-
         local data = params;
 			if (startswith(params.text, "/") || startswith(params.text, "!"))
 			{
-				TextWrapSend(player, 4, ("Use m/ for vscript based commands, and / for sourcemod commands"))
-				DoEntFire("infomsg", "ShowHudHint", "", 0.1, player, null);
+				DoEntFire("prefixmsg", "ShowHudHint", "", 0.1, player, null);
 			}
 
 			if (startswith(params.text, "/") || startswith(params.text, "!") || startswith(params.text, Config["Prefix1"]) || startswith(params.text, Config["Prefix2"]))
@@ -56,18 +55,19 @@ getroottable()[EventsID] <-
 				local prefixlen = 1
 				if (startswith(params.text, Config["Prefix1"]))
 				{
-				    prefixlen = Config["Prefix1"].len()
+					prefixlen = Config["Prefix1"].len()
 				}
-				if (startswith(params.text, Config["Prefix2"]))
-				{
-				    prefixlen = Config["Prefix2"].len()
-				}
+			if (startswith(params.text, Config["Prefix2"]))
+			{
+				prefixlen = Config["Prefix2"].len()
+			}
 
 
-				//Split up command and command arguments
+			//Split up command and command arguments
 				local new = null
-					new = params.text.slice(prefixlen)
-					new = split(new," ")[0]
+				new = params.text.slice(prefixlen)
+				if (new.len() > 0)
+					{new = split(new," ")[0]}
 					// printl(new)
 				local old = params.text.slice(prefixlen + new.len())
 
@@ -116,6 +116,19 @@ getroottable()[EventsID] <-
 			if (player.GetScriptScope().arena[0] == "L")
 			{
 				DoEntFire("infomsg", "ShowHudHint", "", 0.5, player, null);
+
+	for (local item; item = Entities.FindByClassnameWithin(item, "tf_wearable", player.GetOrigin(), 100);)
+	{
+		local itemIndex = NetProps.GetPropInt(item, "m_AttributeManager.m_Item.m_iItemDefinitionIndex");
+		if (itemIndex == 444 && item.GetOwner() == player) // mantreads
+		{
+			TextWrapSend(player, 4, ("[WARNING] mantreads are banned in mga, you can equip them but they will not function!"))
+			break
+		}
+		else
+		{continue}
+	}
+
 			}
 		}
 	}
@@ -125,8 +138,14 @@ getroottable()[EventsID] <-
 	{
 		SpawnEntityFromTable("env_hudhint", {
 		targetname = "infomsg"
-		message = "Welcome to MGA\n\n\nA gamemode about market gardening other players\nWith many different arenas\n\nSelect an arena or duel arena\nWith m/arena or m/duel\n\n\nto leave the arena or duel arena use \nm/r\n\nUse m/help commands\nfor full command list."
+		message = "\nWelcome to MGA\n\n\nA gamemode about market gardening other players\nWith many different arenas\n\nSelect an arena or duel arena\nWith m/arena or m/duel\n\n\nto leave the arena or duel arena use \nm/r\n\nUse m/help commands\nfor full command list."
 	})
+
+		SpawnEntityFromTable("env_hudhint", {
+		targetname = "prefixmsg"
+		message = "===========================================================\nUse m/ for vscript based commands, and / for sourcemod commands\n==========================================================="
+	})
+
 	}
 
 

@@ -1632,7 +1632,8 @@ getroottable()[EventsID] <-
 			else {
 				new = params.text.slice(Config["Prefix2"].len())
 			}
-			new = split(new," ")[0]
+			if (new.len() > 0)
+				{new = split(new," ")[0]}
 
 			args = split(params.text.tostring(), " ")
 
