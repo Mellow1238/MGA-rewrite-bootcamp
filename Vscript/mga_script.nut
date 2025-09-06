@@ -756,7 +756,14 @@ class InputDisplays {
 		if (queue.len() > 1) {queue.remove(0)}
 
 		//Set as text, display after
-		self.KeyValueFromString("message", queue[0]);
+
+			local test_relay = SpawnEntityFromTable("logic_relay",
+			{
+				targetname = queue[0]
+			});
+			NetProps.SetPropBool(test_relay, "m_bForcePurgeFixedupStrings", true)
+		self.KeyValueFromString("message", test_relay.GetName());
+		test_relay.Destroy()
 		return true;
 	}
 }
@@ -771,20 +778,13 @@ class InputDisplays {
 	{
 		if (text != queue[0] && text != null)
 		{
-			local test_relay = SpawnEntityFromTable("logic_relay",
-			{
-				targetname = text
-			});
-			NetProps.SetPropBool(test_relay, "m_bForcePurgeFixedupStrings", true)
-
-			queue.append(test_relay.GetName());
-			test_relay.Destroy()
+			queue.append(text);
 		}
 
 	}
 	else {
 		if (text == null) {text = ""}
-		queue.append(text)
+			queue.append(text);
 	}
 
 	if (color != null)
