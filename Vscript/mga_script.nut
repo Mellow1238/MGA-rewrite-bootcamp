@@ -1392,6 +1392,8 @@ getroottable()[EventsID] <-
 
 		}
 
+		player.GetScriptScope().canCrit <- false
+
 		//Reset things, then add spawn invul and think
 		player.GetScriptScope().lastLandTime <- 0;
 		player.GetScriptScope().lastVel <- Vector();
