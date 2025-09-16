@@ -4544,7 +4544,7 @@ if (!("bot" in SpawnTypes["T"])) {
         TraceHull(trace)
     }
 	// if hit player of the same team
-    if (("enthit" in trace) && trace.enthit.IsPlayer() != 0 && trace.enthit.GetTeam() == player.GetTeam()) {
+    if (("enthit" in trace) && trace.enthit.IsPlayer() != false && trace.enthit.GetTeam() == player.GetTeam()) {
 
 		//Create array and add all players within 300 units to the array
 		//For each player set them to not be solid to the next trace function
@@ -4577,7 +4577,7 @@ if (!("bot" in SpawnTypes["T"])) {
 
 
 	//If hit an enemy
-    if (("enthit" in trace2) && trace2.enthit.IsPlayer() != 0 && trace2.enthit.GetTeam() != player.GetTeam()) {
+    if (("enthit" in trace2) && trace2.enthit.IsPlayer() != false && trace2.enthit.GetTeam() != player.GetTeam()) {
 
 		//Fetch melee weapon
 		local melee = null

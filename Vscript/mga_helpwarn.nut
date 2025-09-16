@@ -117,20 +117,48 @@ getroottable()[EventsID] <-
 			{
 				DoEntFire("infomsg", "ShowHudHint", "", 0.5, player, null);
 
-	for (local item; item = Entities.FindByClassnameWithin(item, "tf_wearable", player.GetOrigin(), 100);)
-	{
-		local itemIndex = NetProps.GetPropInt(item, "m_AttributeManager.m_Item.m_iItemDefinitionIndex");
-		if (itemIndex == 444 && item.GetOwner() == player) // mantreads
+				for (local item; item = Entities.FindByClassnameWithin(item, "tf_wearable", player.GetOrigin(), 100);)
+				{
+					local itemIndex = NetProps.GetPropInt(item, "m_AttributeManager.m_Item.m_iItemDefinitionIndex");
+					if (itemIndex == 444 && item.GetOwner() == player) // mantreads
+					{
+						TextWrapSend(player, 4, ("[WARNING] mantreads are banned in mga, you can equip them but they will not function!"))
+						break
+					}
+				continue
+			}
+
+		for (local i = 1; i < 7; i++)
 		{
-			TextWrapSend(player, 4, ("[WARNING] mantreads are banned in mga, you can equip them but they will not function!"))
-			break
-		}
-		else
-		{continue}
-	}
+			local weapon = NetProps.GetPropEntityArray(player, "m_hMyWeapons", i);
+			if (!weapon)
+			continue;
+			local weaponIndex = NetProps.GetPropInt(weapon, "m_AttributeManager.m_Item.m_iItemDefinitionIndex");
+
+			// get rid of banners
+			if (
+			weaponIndex == 1101)   // base jumper
+			{
+				// do NOT use .Kill(), since the entity will actually remain and progressively slow down the serverz
+				TextWrapSend(player, 4, ("[WARNING] BASE Jumper is banned in mga, you can equip it but it will not function!"));
+				break;
+			}
+
+		if (weaponIndex == 226	|| // battalions backup
+			weaponIndex == 129	|| // buff banner
+			weaponIndex == 1001 || // festive buff banner
+			weaponIndex == 354 // conch
+			)
+			{
+				TextWrapSend(player, 4, ("[WARNING] All banners are banned in mga, you can equip them but they will not function!"));
+				break;
 
 			}
-		}
+
+
+	}
+	}
+	}
 	}
 
 
