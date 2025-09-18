@@ -31,7 +31,8 @@ PluginsConf["CommandsHelp"].rawset("timecheck", "- Lists time remaining for koth
 	{
 		foreach (slot in playerarray)
 		{
-			if (!slot.IsValid() || (slot.GetTeam() != 2 && slot.GetTeam() != 3))
+
+			if (!slot.IsValid() || (slot.GetTeam() != 2 && slot.GetTeam() != 3) || slot.GetScriptScope().arena[1] != arena)
 			{
 				playerarray.remove(playerarray.find(slot))
 				// printl("removed invalid player")
@@ -39,6 +40,20 @@ PluginsConf["CommandsHelp"].rawset("timecheck", "- Lists time remaining for koth
 
 		}
 	}
+
+	foreach (key, value in KothHolderTable) {
+		foreach (i in value) {
+			foreach (j in i)
+				{
+					if (j.GetScriptScope().arena[1] != key)
+					{
+						i.remove(i.find(j))
+						printl("removed")
+					}
+
+				}
+			}
+		}
 
 
 

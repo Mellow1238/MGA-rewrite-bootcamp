@@ -3224,11 +3224,11 @@ TextWrapSend(player,loc,string)
 }
 
 //Function for sending messages during duels
-::SpecDuelMsg <- function(arena, deadp, killp, dtype)
+::SpecDuelMsg <- function(arena, deadp, killp, dtype, arenapop1, arenapop2)
 {
-local arenapop = CheckArenaPop(arena)
-local p1 = ::GetColouredName(arenapop[1])
-local p2 = ::GetColouredName(arenapop[2])
+// local arenapop = CheckArenaPop(arena)
+local p1 = ::GetColouredName(arenapop1)
+local p2 = ::GetColouredName(arenapop2)
 local prefix = (smpref+"\x07FFFF00"+arena+" "+dtype+"\x01: ")
 for (local i = 1; i <= MaxPlayers ; i++)
 {
@@ -3239,13 +3239,13 @@ for (local i = 1; i <= MaxPlayers ; i++)
 		// printl("spec test")
 			if (dtype == "ft10" || dtype == "bhop" || dtype == "vel") {
 				if (dtype != "bhop") {
-					TextWrapSend(player, 3, (prefix+p1+": "+arenapop[1].GetScriptScope().score+", "+p2+": "+arenapop[2].GetScriptScope().score))
+					TextWrapSend(player, 3, (prefix+p1+": "+arenapop1.GetScriptScope().score+", "+p2+": "+arenapop2.GetScriptScope().score))
 				} else {
-					TextWrapSend(player, 3, (prefix+p1+": "+arenapop[1].GetScriptScope().score+", "+p2+": "+arenapop[2].GetScriptScope().score+ " "+combocheck(killp.GetScriptScope().hopnum)))
+					TextWrapSend(player, 3, (prefix+p1+": "+arenapop1.GetScriptScope().score+", "+p2+": "+arenapop2.GetScriptScope().score+ " "+combocheck(killp.GetScriptScope().hopnum)))
 				}
 			}
 			if (dtype == "dom") {
-				TextWrapSend(player, 3, (prefix+p1+": "+arenapop[1].GetScriptScope().score+", "+p2+": "+arenapop[2].GetScriptScope().score+" r:("+(killp.GetScriptScope().restarts)+"/4)"))
+				TextWrapSend(player, 3, (prefix+p1+": "+arenapop1.GetScriptScope().score+", "+p2+": "+arenapop2.GetScriptScope().score+" r:("+(killp.GetScriptScope().restarts)+"/4)"))
 			}
 			dScoreCheck(player.GetScriptScope().arena[1], player, true)
 	}
@@ -4774,6 +4774,13 @@ return null;
 
 	if (killp.GetScriptScope().arena[0] == "D"|| killp.GetScriptScope().arena[0] == "DI") {
 		if (killp.GetScriptScope().arena[1] != deadp.GetScriptScope().arena[1]) {return;}
+
+		local arenapopN = CheckArenaPop(killp.GetScriptScope().arena[1])
+		local arenapop1 = arenapopN[1]
+		local arenapop2 = arenapopN[2]
+
+
+
 		if (killp.GetScriptScope().dtype == "ft10" || killp.GetScriptScope().dtype == "bhop" || killp.GetScriptScope().dtype == "vel") {
 
 			//Point math
@@ -4863,7 +4870,7 @@ return null;
 
 		}
 	dScoreCheck(killp.GetScriptScope().arena[1], killp, true)
-	SpecDuelMsg(deadp.GetScriptScope().arena[1], deadp, killp, deadp.GetScriptScope().dtype)
+	SpecDuelMsg(deadp.GetScriptScope().arena[1], deadp, killp, deadp.GetScriptScope().dtype, arenapop1, arenapop1)
 	}
 
 
