@@ -2251,6 +2251,7 @@ getroottable()[EventsID] <-
 		case "debug4":
 		{
 
+
 				// 97,120,121,118,104
 				// "A:"+format("%5u", (player.GetScriptScope().lvel.tointeger()))
 				// "x:"+vel.x.tointeger()
@@ -3226,7 +3227,6 @@ TextWrapSend(player,loc,string)
 //Function for sending messages during duels
 ::SpecDuelMsg <- function(arena, deadp, killp, dtype, arenapop1, arenapop2)
 {
-// local arenapop = CheckArenaPop(arena)
 local p1 = ::GetColouredName(arenapop1)
 local p2 = ::GetColouredName(arenapop2)
 local prefix = (smpref+"\x07FFFF00"+arena+" "+dtype+"\x01: ")
@@ -4781,6 +4781,7 @@ return null;
 
 
 
+
 		if (killp.GetScriptScope().dtype == "ft10" || killp.GetScriptScope().dtype == "bhop" || killp.GetScriptScope().dtype == "vel") {
 
 			//Point math
@@ -4870,7 +4871,7 @@ return null;
 
 		}
 	dScoreCheck(killp.GetScriptScope().arena[1], killp, true)
-	SpecDuelMsg(deadp.GetScriptScope().arena[1], deadp, killp, deadp.GetScriptScope().dtype, arenapop1, arenapop1)
+	SpecDuelMsg(deadp.GetScriptScope().arena[1], deadp, killp, deadp.GetScriptScope().dtype, arenapop1, arenapop2)
 	}
 
 
