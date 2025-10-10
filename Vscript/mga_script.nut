@@ -1278,11 +1278,16 @@ getroottable()[EventsID] <-
 	{
 		local player = GetPlayerFromUserID(params.userid);
 		local vel = player.GetAbsVelocity();
+
 		if (vel.z != 0 && player.GetScriptScope().lastGround == 0) {
 			player.GetScriptScope().landed <- false;
 			player.GetScriptScope().jtime <- NetProps.GetPropInt(player, "m_nSimulationTick")
 			player.GetScriptScope().canCrit <- true;
+
+
+
 		}
+
 		return
 	}
 
@@ -2250,6 +2255,7 @@ getroottable()[EventsID] <-
 		}
 		case "debug4":
 		{
+
 
 
 				// 97,120,121,118,104
@@ -3690,7 +3696,7 @@ function portaldoor(params)
 	}
 
 
-		//Manage rocket jumper whistle
+		//Manage air strike status
 		local weapon = NetProps.GetPropEntityArray(self, "m_hMyWeapons", 0);
 		if (weapon)
 		{
@@ -3780,6 +3786,7 @@ function portaldoor(params)
 						entity = self
 						filter_type = Constants.EScriptRecipientFilter.RECIPIENT_FILTER_GLOBAL
 					});
+
 				player.GetScriptScope().landed <- false;
 
 				if (player.GetScriptScope().hopnum > 0) {
