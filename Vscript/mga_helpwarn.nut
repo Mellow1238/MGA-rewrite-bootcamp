@@ -16,10 +16,29 @@
 "duels" : ["battles", "dueling", "fights"]
 "spec" : ["spectate", "specduel"]
 "invite" : ["challenge","inv"]
-"accept" : ["yes","hellyeahdude"]
-"decline" : ["no","nowaybro"]
+"accept" : ["yes","hellyeahdude","ifireallyhave"]
+"decline" : ["no","nowaybro", "notreallyfeelingitman"]
 "style" : ["stylemeter","combo"]
 }
+
+//These new additions are for the mgatf servers specifically
+AliasTable.rawset("discord", ["disc"])
+AliasTable.rawset("website", ["web", "webpage", "site", "domain"])
+AliasTable.rawset("donate", ["dono", "support", "patreon", "sponsor"])
+
+AliasTable.rawset("rank", ["ranks", "rankings", "leaderboard", "top50"])
+AliasTable.rawset("report", ["calladmin"])
+
+PluginsConf["CommandsHelp"].rawset("discord", "- Gives the invite to our discord")
+PluginsConf["CommandsHelp"].rawset("website", "- Provides the link to our website")
+PluginsConf["CommandsHelp"].rawset("donate", "- Provides the link to our website and info about donating")
+
+PluginsConf["CommandsHelp"].rawset("rank", "- Informs user about /rank being used instead")
+PluginsConf["CommandsHelp"].rawset("rtv", "- Informs user about /rtv being used instead")
+PluginsConf["CommandsHelp"].rawset("nominate", "- Informs user about /nominate being used instead")
+PluginsConf["CommandsHelp"].rawset("report", "- Informs user about /report being used instead")
+
+
 
 
 foreach (key, value in ::AliasTable)
@@ -29,8 +48,6 @@ foreach (key, value in ::AliasTable)
 		PluginsConf["CommandsHelp"].rawset("."+i, "")
 	}
 }
-
-
 
 local EventsID = UniqueString()
 getroottable()[EventsID] <-
@@ -60,6 +77,47 @@ getroottable()[EventsID] <-
 			if (startswith(params.text, Config["Prefix2"]))
 			{
 				prefixlen = Config["Prefix2"].len()
+			}
+
+
+
+
+			//Register new commands for servers
+			if (startswith(params.text, Config["Prefix1"] + "discord") || startswith(params.text, Config["Prefix2"]+"discord"))
+			{
+				TextWrapSend(player, 3, (smpref+"You can join our discord at https://discord.gg/PgXbqcwTcx"))
+			}
+
+			if (startswith(params.text, Config["Prefix1"] + "website") || startswith(params.text, Config["Prefix2"]+"website"))
+			{
+				TextWrapSend(player, 3, (smpref+"You can view our website at https://mgatf.org"))
+			}
+
+			if (startswith(params.text, Config["Prefix1"] + "donate") || startswith(params.text, Config["Prefix2"]+"donate"))
+			{
+				TextWrapSend(player, 3, (smpref+"Support us at mgatf.org (\x07FFFF00m/website\x01) under the ''\x07FFFF00support us!\x01'' section at the bottom of the menu."))
+			}
+
+
+
+			if (startswith(params.text, Config["Prefix1"] + "rank") || startswith(params.text, Config["Prefix2"]+"rank"))
+			{
+				TextWrapSend(player, 3, (smpref+"Rankings are provided by a sourcemod plugin, please use /rank instead"))
+			}
+
+			if (startswith(params.text, Config["Prefix1"] + "rtv") || startswith(params.text, Config["Prefix2"]+"rtv"))
+			{
+				TextWrapSend(player, 3, (smpref+"Map votes are provided by a sourcemod plugin, please use /rtv instead"))
+			}
+
+			if (startswith(params.text, Config["Prefix1"] + "nominate") || startswith(params.text, Config["Prefix2"]+"nominate"))
+			{
+				TextWrapSend(player, 3, (smpref+"Map votes are provided by a sourcemod plugin, please use /nominate instead"))
+			}
+
+			if (startswith(params.text, Config["Prefix1"] + "report") || startswith(params.text, Config["Prefix2"]+"report"))
+			{
+				TextWrapSend(player, 3, (smpref+"Reports are provided by a sourcemod plugin, please use /report instead"))
 			}
 
 
