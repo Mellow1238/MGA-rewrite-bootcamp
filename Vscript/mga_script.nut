@@ -2896,6 +2896,7 @@ switch (PopCheck.len())
 	case 0: return ([0]);break
 	case 1: return ([1, PopCheck[0]]);break
 	case 2: return ([2, PopCheck[0], PopCheck[1]]);break
+	default: return ([PopCheck.len()]);break
 }
 }
 
