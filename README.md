@@ -17,4 +17,4 @@ Then a letter for the minor versions, these are changes to the packed vscript wi
 
 
 ## Server hosting courtesy of generous donations from:
-pvs_, Apple
+pvs_, Apple, HlnFer (eef)
