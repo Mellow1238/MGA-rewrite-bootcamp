@@ -2,7 +2,7 @@ versioninfo
 {
 	"editorversion" "400"
 	"editorbuild" "8870"
-	"mapversion" "220"
+	"mapversion" "221"
 	"formatversion" "100"
 	"prefab" "0"
 }
@@ -131,7 +131,7 @@ bgimages_plus
 world
 {
 	"id" "1"
-	"mapversion" "220"
+	"mapversion" "221"
 	"classname" "worldspawn"
 	"_minlight" "0.0"
 	"comment" "Decompiled by BSPSource v1.4.4 from koth_harvest_final"
@@ -662645,7 +662645,7 @@ entity
 	"angles" "0 0 0"
 	"model" "models/editor-abs/dev_engy.mdl"
 	"targetname" "V_A_R_h"
-	"origin" "-9344 128 800.005"
+	"origin" "-9416 128 800.005"
 	editor
 	{
 		"color" "220 30 220"
@@ -662798,7 +662798,7 @@ entity
 	"angles" "0 0 0"
 	"model" "models/editor-abs/dev_engy.mdl"
 	"targetname" "V_A_B_h"
-	"origin" "-9344 512 800.005"
+	"origin" "-9416 512 800.005"
 	editor
 	{
 		"color" "220 30 220"
@@ -665005,8 +665005,8 @@ cameras
 	"activecamera" "0"
 	camera
 	{
-		"position" "[-8374.97 -1114.62 1196.75]"
-		"look" "[-8386.5 -1320.7 1028.41]"
+		"position" "[-9679.02 133.73 1227.85]"
+		"look" "[-9487.89 147.095 1042.83]"
 	}
 	camera
 	{
